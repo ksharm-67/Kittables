@@ -1,11 +1,14 @@
-import { registerRootComponent } from 'expo';
-import { useFonts, Nunito_400Regular, Nunito_700Bold } from '@expo-google-fonts/nunito';
+import { registerRootComponent } from 'expo'
+import { useFonts, Nunito_400Regular, Nunito_700Bold } from '@expo-google-fonts/nunito'
 import { StyleSheet, Text, View } from 'react-native'
-import { Button, withTheme } from '@rneui/themed';
+import { Button, withTheme } from '@rneui/themed'
+import { useRouter } from 'expo-router'
 import App from './app';
 import React from 'react'
 
 const index = () => {
+  const router = useRouter();
+
   const [fontsLoaded] = useFonts({
     Nunito_400Regular,
     Nunito_700Bold,
@@ -16,13 +19,14 @@ const index = () => {
   return (
     <View style={styles.container}>
       <Button
-        style={{
-          position: 
-        }}
         title="Log On"
+        onPress={() => router.push('/logon')}
         titleStyle={styles.titStyle}
         buttonStyle={styles.butStyle}
         containerStyle={{
+          position: 'absolute',
+          top: 40,
+          right: -20,
           width: 90,
           marginHorizontal: 50,
           marginVertical: 10,
