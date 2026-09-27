@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { StyleSheet, Text, TextInput, Image, View } from 'react-native'
 import { useFonts, Nunito_400Regular, Nunito_700Bold } from '@expo-google-fonts/nunito'
 import { Button, withTheme } from '@rneui/themed'
 import { useState } from 'react'
@@ -24,6 +24,16 @@ const logon = () => {
                 marginHorizontal: 50,
                 marginVertical: 10,
                 }}
+            />
+            <Image 
+              source={require('../assets/icon.png')} 
+              style={{
+                  marginTop: 105,
+                  marginBottom: -50,
+                  width: 300, 
+                  height: 300
+              }}
+              resizeMode='contain'
             />
             <Text style={styles.text}>Logon</Text>
             <TextInput
@@ -67,7 +77,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fedcdb',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   text: {
     fontFamily: 'Nunito_400Regular',
@@ -87,7 +96,7 @@ const styles = StyleSheet.create({
     color: 'blue',
   },
   boxStyle: {
-    width: 250,
+    width: 250, 
     height: 40,
     borderWidth: 2.5,
     borderRadius: 15,
