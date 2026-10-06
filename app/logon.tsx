@@ -1,7 +1,8 @@
-import { StyleSheet, Text, TextInput, Image, View } from 'react-native'
+import { StyleSheet, Text, TextInput, Image, View, Alert } from 'react-native'
 import { useFonts, Nunito_400Regular, Nunito_700Bold } from '@expo-google-fonts/nunito'
 import { Button, withTheme } from '@rneui/themed'
 import { useState } from 'react'
+import { supabase } from '../lib/supabase'
 import { Link, useRouter } from 'expo-router'
 
 const logon = () => {
@@ -40,7 +41,7 @@ const logon = () => {
                 style={styles.boxStyle}
                 value={username}
                 onChangeText={setUsername}
-                placeholder='Username'
+                placeholder='Email'
                 placeholderTextColor='#00bcfc'
             />
             <TextInput
@@ -52,7 +53,46 @@ const logon = () => {
                 secureTextEntry
             />
             <Button
-                onPress={() => router.push('/')}        
+                onPress={async () => {
+                  const { data, error } = await supabase.auth.signInWithPassword({
+                    email: username,
+                    password,
+                  })
+
+                  if (error) {
+                    Alert.alert('Error', error.message)
+                    console.log(error.message)
+                    return
+                  }
+                  console.log(data.user)
+                }}       
+                title="Create Account"
+                titleStyle={styles.titStyle}
+                buttonStyle={styles.butStyle}
+                containerStyle={{
+                position: 'absolute',
+                bottom: 300,
+                left: 30,
+                width: 120,
+                marginHorizontal: 50,
+                marginVertical: -22,
+                }}
+            />
+            <Button
+                onPress={async () => {
+                  const { data, error } = await supabase.auth.signUp({
+                    email: username,
+                    password,
+                  })
+
+                  if (error) {
+                    Alert.alert('Error', error.message)
+                    console.log(error.message)
+                    return
+                  }
+
+                  console.log(data.user)
+                }}     
                 title="Sign In"
                 titleStyle={styles.titStyle}
                 buttonStyle={styles.butStyle}
@@ -60,9 +100,9 @@ const logon = () => {
                 position: 'absolute',
                 bottom: 300,
                 right: 30,
-                width: 90,
+                width: 100,
                 marginHorizontal: 50,
-                marginVertical: 10,
+                marginVertical: 0,
                 }}
             />
             <Link href='/' style={styles.linkStyle}>Forgot Password </Link>
@@ -89,7 +129,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   linkStyle: {
-    marginTop: 0,
+    marginTop: -30,
     transform: [{ translateY: 35 }],
     marginLeft: 85,
     alignSelf: 'flex-start',
